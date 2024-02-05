@@ -24,9 +24,7 @@ class AccessTokenRepositoryImpl @Inject constructor(
         return null
     }
 
-    override suspend fun saveToken(token: String?) {
-        dataStore.saveToken(token)
-    }
+    override suspend fun saveToken(token: String?) = dataStore.saveToken(token)
 
     override fun token(): Flow<String?> = dataStore.getToken()
 
