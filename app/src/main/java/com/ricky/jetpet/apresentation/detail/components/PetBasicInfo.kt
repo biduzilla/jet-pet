@@ -43,7 +43,7 @@ fun PetBasicInfo(
                 text = name,
                 modifier = Modifier.padding(end = 12.dp),
                 color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))

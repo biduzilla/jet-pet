@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
@@ -32,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ricky.jetpet.apresentation.detail.components.PetBasicInfo
+import com.ricky.jetpet.components.OwnerCardInfo
 import com.ricky.jetpet.data.DummyPetDataSource
 import com.ricky.jetpet.data.model.Pet
 
@@ -89,10 +92,35 @@ fun DetailScreen(
             }
 
             item {
+                OwnerCardInfo(owner = pet.owner)
+            }
+            item {
+                PetButton {
 
+                }
             }
         }
     }
+}
+
+@Composable
+fun PetButton(onClick: () -> Unit) {
+    Spacer(modifier = Modifier.height(36.dp))
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Text(
+            modifier = Modifier.padding(vertical = 8.dp),
+            text = "Adopt Me",
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold
+        )
+    }
+    Spacer(modifier = Modifier.height(24.dp))
 }
 
 @Composable
@@ -127,8 +155,8 @@ fun Title(title: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PetInfo(pet: Pet) {
-    Column {
+fun PetInfo(pet: Pet, modifier: Modifier = Modifier) {
+    Column(modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
         Title(title = "Pet Info")
         Row(
