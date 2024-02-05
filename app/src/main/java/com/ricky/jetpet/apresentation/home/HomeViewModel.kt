@@ -1,7 +1,5 @@
 package com.ricky.jetpet.apresentation.home
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.datastore.dataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ricky.jetpet.data.DataStoreUtil
@@ -10,7 +8,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,7 +15,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val dataStoreUtil: DataStoreUtil) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
-    private val state = _state.asStateFlow()
+    val state = _state.asStateFlow()
 
     init {
         viewModelScope.launch {

@@ -11,14 +11,15 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailsViewModel @Inject constructor(saveStateHandle: SavedStateHandle) : ViewModel() {
+class DetailsViewModel @Inject constructor(private val saveStateHandle: SavedStateHandle) :
+    ViewModel() {
 
     private val _state = MutableStateFlow(DetailState())
     val state = _state.asStateFlow()
 
     init {
-        saveStateHandle.get<Int>(Constants.PARAM_PET_ID)?.let { petId ->
-            val pet = DummyPetDataSource.dogList.find { p -> p.id == petId }
+        saveStateHandle.get<String>(Constants.PARAM_PET_ID)?.let { petId ->
+            val pet = DummyPetDataSource.dogList.find { p -> p.id == petId.toInt() }
             pet?.let {
                 _state.update {
                     it.copy(

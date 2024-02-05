@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -22,11 +23,13 @@ import com.ricky.jetpet.R
 @Composable
 fun TopBar(onClick: () -> Unit) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
@@ -42,18 +45,21 @@ fun TopBar(onClick: () -> Unit) {
                 color = MaterialTheme.colorScheme.onSurface
             )
         }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    top = 24.dp,
-                    end = 36.dp
-                )
-        ) {
-            PetSwitch {
-                onClick.invoke()
-            }
+        PetSwitch {
+            onClick.invoke()
         }
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(
+//                    top = 24.dp,
+//                    end = 36.dp
+//                )
+//        ) {
+//            PetSwitch {
+//                onClick.invoke()
+//            }
+//        }
     }
 }
 
