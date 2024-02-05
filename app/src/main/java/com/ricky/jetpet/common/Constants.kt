@@ -11,4 +11,5 @@ object Constants {
     const val SECRET_KEY = "vLmYLaEVSARcTFPg5KplTyvIVTopKf0Kavi6kBM7"
     const val CLIENT_ID = "client_id"
     const val CLIENT_SECRET = "client_secret"
+    const val USER_TOKEN="user_token"
 }

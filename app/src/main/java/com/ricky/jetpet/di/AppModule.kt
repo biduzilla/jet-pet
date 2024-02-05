@@ -4,6 +4,8 @@ import android.content.Context
 import com.ricky.jetpet.common.Constants.BASE_URL
 import com.ricky.jetpet.data.DataStoreUtil
 import com.ricky.jetpet.data.network.retrofit.PetFinderApiService
+import com.ricky.jetpet.data.token.AccessTokenRepository
+import com.ricky.jetpet.data.token.AccessTokenRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,5 +33,14 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(PetFinderApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAccessTokenRepository(
+        api: PetFinderApiService,
+        dataStoreUtil: DataStoreUtil
+    ): AccessTokenRepository {
+        return AccessTokenRepositoryImpl(dataStore = dataStoreUtil, api = api)
     }
 }
