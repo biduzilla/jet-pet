@@ -1,4 +1,4 @@
-package com.ricky.jetpet.data.model
+package com.ricky.jetpet.domain.model
 
 import androidx.annotation.DrawableRes
 

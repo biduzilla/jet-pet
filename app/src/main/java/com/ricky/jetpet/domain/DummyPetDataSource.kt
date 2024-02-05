@@ -1,8 +1,8 @@
-package com.ricky.jetpet.data
+package com.ricky.jetpet.domain
 
 import com.ricky.jetpet.R
-import com.ricky.jetpet.data.model.Owner
-import com.ricky.jetpet.data.model.Pet
+import com.ricky.jetpet.domain.model.Owner
+import com.ricky.jetpet.domain.model.Pet
 
 object DummyPetDataSource {
     private val owner = listOf(
