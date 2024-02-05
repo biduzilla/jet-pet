@@ -1,11 +1,11 @@
-package com.ricky.jetpet.domain.model
+package com.ricky.jetpet.data.network.models
 
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Next(
+data class Previous(
     @SerialName("href")
     val href: String
 )

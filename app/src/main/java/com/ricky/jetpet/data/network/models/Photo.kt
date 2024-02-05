@@ -1,4 +1,4 @@
-package com.ricky.jetpet.domain.model
+package com.ricky.jetpet.data.network.models
 
 
 import kotlinx.serialization.SerialName
