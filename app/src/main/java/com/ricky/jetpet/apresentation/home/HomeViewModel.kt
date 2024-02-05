@@ -1,31 +1,44 @@
 package com.ricky.jetpet.apresentation.home
 
-import androidx.compose.runtime.MutableState
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.datastore.dataStore
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ricky.jetpet.data.DataStoreUtil
 import com.ricky.jetpet.domain.DummyPetDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel : ViewModel() {
+class HomeViewModel @Inject constructor(private val dataStoreUtil: DataStoreUtil) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
     private val state = _state.asStateFlow()
 
     init {
-        _state.update {
-            it.copy(
-                pets = DummyPetDataSource.dogList
-            )
+        viewModelScope.launch {
+            dataStoreUtil.getTheme().collect { isDark ->
+                _state.update {
+                    it.copy(
+                        pets = DummyPetDataSource.dogList,
+                        isDark = isDark
+                    )
+                }
+            }
         }
     }
 
-    fun onEvent(event:HomeEvent){
-        when(event){
+    fun onEvent(event: HomeEvent) {
+        when (event) {
             HomeEvent.OnSwitch -> {
-
+                viewModelScope.launch {
+                    dataStoreUtil.saveTheme(isDark = !_state.value.isDark)
+                }
             }
         }
     }

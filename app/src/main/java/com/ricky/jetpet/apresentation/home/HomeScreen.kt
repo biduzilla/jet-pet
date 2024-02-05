@@ -17,13 +17,13 @@ import com.ricky.jetpet.navigation.Screens
 fun HomeScreen(
     state: HomeState,
     navController: NavController,
-    onSwitchClick: () -> Unit,
+    onEvent: (HomeEvent) -> Unit,
 ) {
     val petList = DummyPetDataSource.dogList
     Scaffold(
         topBar = {
             TopBar {
-                onSwitchClick()
+                onEvent(HomeEvent.OnSwitch)
             }
         }
     ) { paddingValues ->
@@ -35,5 +35,4 @@ fun HomeScreen(
             }
         }
     }
-
 }
