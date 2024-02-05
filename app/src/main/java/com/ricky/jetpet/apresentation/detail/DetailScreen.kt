@@ -28,11 +28,13 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.ricky.jetpet.apresentation.detail.components.PetBasicInfo
 import com.ricky.jetpet.components.OwnerCardInfo
 import com.ricky.jetpet.domain.DummyPetDataSource
@@ -41,8 +43,8 @@ import com.ricky.jetpet.domain.model.Pet
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
-    index: Int,
-    onNavigate: () -> Unit
+    state: DetailState,
+    navController: NavController,
 ) {
     Scaffold(topBar = {
         TopAppBar(
@@ -53,7 +55,7 @@ fun DetailScreen(
                     contentDescription = null,
                     modifier = Modifier
                         .clickable {
-                            onNavigate.invoke()
+                            navController.popBackStack()
                         }
                         .padding(start = 8.dp, end = 24.dp),
                     tint = MaterialTheme.colorScheme.onSurface
@@ -65,12 +67,11 @@ fun DetailScreen(
             )
         )
     }) { paddingValues ->
-        val pet = DummyPetDataSource.dogList[index]
         LazyColumn(contentPadding = paddingValues) {
             item {
                 Image(
-                    painter = painterResource(id = pet.image),
-                    contentDescription = pet.name,
+                    painter = painterResource(id = state.pet.image),
+                    contentDescription = state.pet.name,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(346.dp),
@@ -79,20 +80,20 @@ fun DetailScreen(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 PetBasicInfo(
-                    name = pet.name,
-                    gender = pet.gender,
-                    location = pet.location
+                    name = state.pet.name,
+                    gender = state.pet.gender,
+                    location = state.pet.location
                 )
             }
             item {
-                MyStoryItem(pet = pet)
+                MyStoryItem(pet = state.pet)
             }
             item {
-                PetInfo(pet = pet)
+                PetInfo(pet = state.pet)
             }
 
             item {
-                OwnerCardInfo(owner = pet.owner)
+                OwnerCardInfo(owner = state.pet.owner)
             }
             item {
                 PetButton {
@@ -225,9 +226,11 @@ fun InfoCard(
 @Preview
 @Composable
 private fun DetailsScreenPreview() {
-    DetailScreen(index = 0) {
-
-    }
+    val context = LocalContext.current
+    DetailScreen(
+        state = DetailState(),
+        navController = NavController(context)
+    )
 }
 
 @Preview(showBackground = true)

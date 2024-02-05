@@ -1,16 +1,17 @@
 package com.ricky.jetpet.domain.model
 
 import androidx.annotation.DrawableRes
+import com.ricky.jetpet.R
 
 data class Pet(
-    val name: String,
-    val gender: String,
-    val age: String,
-    val breed: String,
-    val color: String,
-    val location: String,
-    @DrawableRes val image: Int,
-    val description: String,
-    val owner: Owner,
-    val id: Int
+    var name: String = "",
+    var gender: String = "",
+    var age: String = "",
+    var breed: String = "",
+    var color: String = "",
+    var location: String = "",
+    @DrawableRes var image: Int = R.drawable.blue_dog,
+    var description: String = "",
+    var owner: Owner = Owner(),
+    var id: Int =0
 )
