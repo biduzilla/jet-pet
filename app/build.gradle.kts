@@ -83,4 +83,14 @@ dependencies {
 
     //AnimatedNavHost
     implementation ("com.google.accompanist:accompanist-navigation-animation:0.31.2-alpha")
+
+    //network
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
+    // coil
+    implementation("io.coil-kt:coil-compose:2.1.0")
 }

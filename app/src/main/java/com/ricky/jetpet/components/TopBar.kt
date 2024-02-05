@@ -48,18 +48,6 @@ fun TopBar(onClick: () -> Unit) {
         PetSwitch {
             onClick.invoke()
         }
-//        Row(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(
-//                    top = 24.dp,
-//                    end = 36.dp
-//                )
-//        ) {
-//            PetSwitch {
-//                onClick.invoke()
-//            }
-//        }
     }
 }
 
