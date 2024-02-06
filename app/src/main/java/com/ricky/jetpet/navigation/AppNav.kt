@@ -16,7 +16,7 @@ import com.ricky.jetpet.apresentation.detail.DetailScreen
 import com.ricky.jetpet.apresentation.detail.DetailsViewModel
 import com.ricky.jetpet.apresentation.home.HomeScreen
 import com.ricky.jetpet.apresentation.home.HomeViewModel
-import com.ricky.jetpet.common.Constants
+import com.ricky.jetpet.utils.Constants
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Colors(
     @SerialName("primary")
-    val primary: Any?,
+    val primary: String?,
     @SerialName("secondary")
     val secondary: Any?,
     @SerialName("tertiary")

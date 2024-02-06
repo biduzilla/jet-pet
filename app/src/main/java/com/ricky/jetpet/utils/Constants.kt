@@ -1,4 +1,4 @@
-package com.ricky.jetpet.common
+package com.ricky.jetpet.utils
 
 object Constants {
     const val SETTINGS: String = "settings"

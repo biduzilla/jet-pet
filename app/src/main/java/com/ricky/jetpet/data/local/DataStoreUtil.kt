@@ -7,8 +7,8 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.ricky.jetpet.common.Constants
-import com.ricky.jetpet.common.Constants.USER_TOKEN
+import com.ricky.jetpet.utils.Constants
+import com.ricky.jetpet.utils.Constants.USER_TOKEN
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

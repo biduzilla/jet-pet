@@ -20,6 +20,8 @@ data class Animal(
     val contact: Contact,
     @SerialName("description")
     val description: String,
+    @SerialName("distance")
+    val distance: Double,
     @SerialName("environment")
     val environment: Environment,
     @SerialName("gender")

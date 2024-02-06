@@ -5,7 +5,7 @@ data class Pet(
     val age: String = "",
     val breeds: String = "",
     val colors: String = "",
-    val contact: PewOwnerContacts = PewOwnerContacts(),
+    val contact: PetOwnerContacts = PetOwnerContacts(),
     val description: String = "",
     val distance: String = "",
     val gender: String = "",

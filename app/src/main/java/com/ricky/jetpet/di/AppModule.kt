@@ -1,7 +1,7 @@
 package com.ricky.jetpet.di
 
 import android.content.Context
-import com.ricky.jetpet.common.Constants.BASE_URL
+import com.ricky.jetpet.utils.Constants.BASE_URL
 import com.ricky.jetpet.data.local.DataStoreUtil
 import com.ricky.jetpet.data.network.retrofit.PetFinderApiService
 import com.ricky.jetpet.data.network.token.AccessTokenRepository

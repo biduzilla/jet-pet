@@ -11,7 +11,7 @@ data class Breeds(
     @SerialName("primary")
     val primary: String,
     @SerialName("secondary")
-    val secondary: Any?,
+    val secondary: String,
     @SerialName("unknown")
     val unknown: Boolean
 )
