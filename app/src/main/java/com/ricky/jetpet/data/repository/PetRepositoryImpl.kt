@@ -25,7 +25,7 @@ class PetRepositoryImpl @Inject constructor(
         }
     }
 
-    suspend fun getAnimalById(id: Int): ResourceHolder<Pet> {
+    override suspend fun getAnimalById(id: Int): ResourceHolder<Pet> {
         return try {
             val data = apiService.getAnimal(id)
 

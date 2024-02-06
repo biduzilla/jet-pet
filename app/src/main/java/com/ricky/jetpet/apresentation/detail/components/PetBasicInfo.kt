@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ricky.jetpet.R
 import com.ricky.jetpet.components.GenderTag
@@ -28,7 +27,9 @@ fun PetBasicInfo(
     modifier: Modifier = Modifier,
     name: String,
     gender: String,
-    location: String
+    location: String,
+    species: String,
+    status: String
 ) {
     Row(
         modifier = modifier
@@ -70,7 +71,7 @@ fun PetBasicInfo(
             }
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "Adoptable",
+                text = status,
                 modifier = Modifier
                     .padding(end = 12.dp),
                 color = MaterialTheme.colorScheme.onSurface,
@@ -85,15 +86,9 @@ fun PetBasicInfo(
         ) {
             GenderTag(gender = gender)
             Text(
-                text = "Dog",
+                text = species,
                 style = MaterialTheme.typography.bodyMedium
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PetBasicInfoPreview() {
-    PetBasicInfo(name = "Toddy", gender = "Male", location = "NB")
 }

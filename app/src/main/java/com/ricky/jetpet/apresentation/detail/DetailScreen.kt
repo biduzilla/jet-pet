@@ -1,19 +1,22 @@
 package com.ricky.jetpet.apresentation.detail
 
-import androidx.compose.foundation.Image
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
@@ -25,19 +28,25 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.ricky.jetpet.R
 import com.ricky.jetpet.apresentation.detail.components.PetBasicInfo
-import com.ricky.jetpet.components.OwnerCardInfo
 import com.ricky.jetpet.domain.model.Pet
+import com.ricky.jetpet.utils.ResourceHolder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,6 +54,11 @@ fun DetailScreen(
     state: DetailState,
     navController: NavController,
 ) {
+    var isLoading: Boolean by remember {
+        mutableStateOf(false)
+    }
+    val context = LocalContext.current
+
     Scaffold(topBar = {
         TopAppBar(
             title = { Text(text = "Detail") },
@@ -67,38 +81,79 @@ fun DetailScreen(
         )
     }) { paddingValues ->
         LazyColumn(contentPadding = paddingValues) {
-            item {
-                Image(
-                    painter = painterResource(id = state.pet.image),
-                    contentDescription = state.pet.name,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(346.dp),
-                    alignment = Alignment.CenterStart,
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                PetBasicInfo(
-                    name = state.pet.name,
-                    gender = state.pet.gender,
-                    location = state.pet.location
-                )
-            }
-            item {
-                MyStoryItem(pet = state.pet)
-            }
-            item {
-                PetInfo(pet = state.pet)
-            }
+            when (state.pet) {
+                is ResourceHolder.Error -> {
+                    state.pet.throwable?.printStackTrace()
+                    Toast.makeText(
+                        context,
+                        state.pet.throwable?.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
 
-            item {
-                OwnerCardInfo(owner = state.pet.owner)
-            }
-            item {
-                PetButton {
+                is ResourceHolder.Loading -> {
+                    item {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .wrapContentSize(align = Alignment.Center)
+                        )
+                    }
+                }
 
+                is ResourceHolder.Success -> {
+                    item {
+                        AsyncImage(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(346.dp)
+                                .clip(RoundedCornerShape(16.dp)),
+                            model = if (state.pet.data?.photos?.isNotEmpty() == true) state.pet.data.photos[0].full else null,
+                            placeholder = painterResource(id = R.drawable.placeholder_ic),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            alignment = Alignment.CenterStart,
+                            onLoading = {
+                                isLoading = true
+                            },
+                            onSuccess = {
+                                isLoading = false
+                            },
+                            onError = {
+                                Toast.makeText(
+                                    context,
+                                    it.result.throwable.message,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        PetBasicInfo(
+                            name = if (state.pet.data != null) state.pet.data.name else "unknown",
+                            gender = if (state.pet.data != null) state.pet.data.gender else "unknown",
+                            location = if (state.pet.data != null) state.pet.data.contact.address else "unknown",
+                            species = if (state.pet.data != null) state.pet.data.species else "unknown",
+                            status = if (state.pet.data != null) state.pet.data.status else "unknown",
+                        )
+                    }
+                    item {
+                        MyStoryItem(pet = state.pet.data)
+                    }
+                    item {
+                        PetInfo(pet = state.pet.data)
+                    }
+
+//            item {
+//                OwnerCardInfo(owner = state.pet.owner)
+//            }
+                    item {
+                        PetButton {
+
+                        }
+                    }
                 }
             }
+
         }
     }
 }
@@ -124,12 +179,12 @@ fun PetButton(onClick: () -> Unit) {
 }
 
 @Composable
-fun MyStoryItem(pet: Pet, modifier: Modifier = Modifier) {
+fun MyStoryItem(pet: Pet?, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Spacer(modifier = Modifier.height(24.dp))
         Title(title = "My Story")
         Text(
-            text = pet.description,
+            text = pet?.description ?: "unknown",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
@@ -155,8 +210,8 @@ fun Title(title: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PetInfo(pet: Pet, modifier: Modifier = Modifier) {
-    Column(modifier = Modifier) {
+fun PetInfo(pet: Pet?, modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
         Spacer(modifier = Modifier.height(16.dp))
         Title(title = "Pet Info")
         Row(
@@ -164,21 +219,21 @@ fun PetInfo(pet: Pet, modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             InfoCard(
-                primaryText = pet.age,
+                primaryText = "${pet?.age ?: "unknown"} yrs",
                 secondaryText = "Age",
                 modifier = Modifier
                     .weight(1f)
                     .padding(4.dp)
             )
             InfoCard(
-                primaryText = pet.color,
+                primaryText = pet?.colors ?: "unknown",
                 secondaryText = "Color",
                 modifier = Modifier
                     .weight(1f)
                     .padding(4.dp)
             )
             InfoCard(
-                primaryText = pet.breed,
+                primaryText = pet?.breeds ?: "unknown",
                 secondaryText = "Breed",
                 modifier = Modifier
                     .weight(1f)
@@ -220,20 +275,4 @@ fun InfoCard(
             Spacer(modifier = Modifier.height(4.dp))
         }
     }
-}
-
-@Preview
-@Composable
-private fun DetailsScreenPreview() {
-    val context = LocalContext.current
-    DetailScreen(
-        state = DetailState(),
-        navController = NavController(context)
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun InfoCardPreview() {
-    PetInfo(pet = DummyPetDataSource.dogList[0])
 }
