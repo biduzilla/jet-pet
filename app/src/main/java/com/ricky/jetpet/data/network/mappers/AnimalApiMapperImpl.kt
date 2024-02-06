@@ -2,7 +2,6 @@ package com.ricky.jetpet.data.network.mappers
 
 import com.ricky.jetpet.data.network.models.Address
 import com.ricky.jetpet.data.network.models.Animal
-import com.ricky.jetpet.data.network.models.ApiAnimals
 import com.ricky.jetpet.data.network.models.Contact
 import com.ricky.jetpet.data.network.models.Photo
 import com.ricky.jetpet.domain.model.Pet
