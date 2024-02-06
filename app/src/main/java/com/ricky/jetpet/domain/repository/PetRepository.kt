@@ -1,8 +1,8 @@
 package com.ricky.jetpet.domain.repository
 
 import com.ricky.jetpet.domain.model.Pet
+import com.ricky.jetpet.utils.ResourceHolder
 
 interface PetRepository {
-
-    suspend fun getAnimals(page:Int):List<Pet>
+    suspend fun getAnimals(page: Int): ResourceHolder<List<Pet>>
 }

@@ -9,33 +9,31 @@ import com.ricky.jetpet.domain.model.Pet
 import com.ricky.jetpet.domain.model.PetOwnerContacts
 import com.ricky.jetpet.domain.model.PetPhoto
 
-class PetApiMapperImpl : PetApiMapper<List<Pet>, ApiAnimals> {
+class AnimalApiMapperImpl : AnimalApiMapper<Pet, Animal> {
     companion object {
         private const val EMPTY_DATA = "unknown"
     }
 
-    override fun mapToDomain(apiEntity: ApiAnimals): List<Pet> {
-        return apiEntity.animals.map { animal ->
-            animal.run {
-                Pet(
-                    id = formatData(id.toString()),
-                    age = formatData(age),
-                    breeds = formatData(breeds.primary),
-                    colors = formatData(colors.primary),
-                    contact = formatContacts(contact),
-                    description = formatData(description),
-                    distance = formatData(distance.toString()),
-                    gender = formatData(gender),
-                    name = formatData(name),
-                    photos = formatPhotos(photos),
-                    size = formatData(size),
-                    species = formatData(species),
-                    status = formatData(status),
-                    tags = tags,
-                    type = formatData(type),
-                    currentPage = apiEntity.pagination.currentPage
-                )
-            }
+    override fun mapToDomain(animal: Animal): Pet {
+        return animal.run {
+            Pet(
+                id = formatData(id.toString()),
+                age = formatData(age),
+                breeds = formatData(breeds.primary),
+                colors = formatData(colors.primary),
+                contact = formatContacts(contact),
+                description = formatData(description),
+                distance = formatData(distance.toString()),
+                gender = formatData(gender),
+                name = formatData(name),
+                photos = formatPhotos(photos),
+                size = formatData(size),
+                species = formatData(species),
+                status = formatData(status),
+                tags = tags,
+                type = formatData(type),
+                currentPage = 0
+            )
         }
     }
 
@@ -70,5 +68,7 @@ class PetApiMapperImpl : PetApiMapper<List<Pet>, ApiAnimals> {
             )
         } ?: listOf()
     }
+
+
 }
 

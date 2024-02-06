@@ -11,7 +11,7 @@ data class Pagination(
     @SerialName("current_page")
     val currentPage: Int,
     @SerialName("_links")
-    val links: LinksX,
+    val links: Links,
     @SerialName("total_count")
     val totalCount: Int,
     @SerialName("total_pages")
