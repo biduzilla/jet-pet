@@ -1,6 +1,6 @@
-package com.ricky.jetpet.data.interceptors
+package com.ricky.jetpet.data.network.interceptors
 
-import com.ricky.jetpet.data.token.AccessTokenRepository
+import com.ricky.jetpet.data.network.token.AccessTokenRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request

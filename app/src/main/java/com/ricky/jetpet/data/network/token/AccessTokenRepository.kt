@@ -1,4 +1,4 @@
-package com.ricky.jetpet.data.token
+package com.ricky.jetpet.data.network.token
 
 import com.ricky.jetpet.data.network.models.AccessToken
 import kotlinx.coroutines.flow.Flow

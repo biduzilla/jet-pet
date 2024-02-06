@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.lifecycleScope
-import com.ricky.jetpet.data.DataStoreUtil
+import com.ricky.jetpet.data.local.DataStoreUtil
 import com.ricky.jetpet.navigation.AppNav
 import com.ricky.jetpet.ui.theme.JetPetTheme
 import dagger.hilt.android.AndroidEntryPoint

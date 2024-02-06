@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.ricky.jetpet.components.PetInfoItem
 import com.ricky.jetpet.components.TopBar
-import com.ricky.jetpet.domain.DummyPetDataSource
 import com.ricky.jetpet.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)

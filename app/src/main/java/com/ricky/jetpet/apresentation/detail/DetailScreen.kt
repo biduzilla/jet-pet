@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ricky.jetpet.apresentation.detail.components.PetBasicInfo
 import com.ricky.jetpet.components.OwnerCardInfo
-import com.ricky.jetpet.domain.DummyPetDataSource
 import com.ricky.jetpet.domain.model.Pet
 
 @OptIn(ExperimentalMaterial3Api::class)

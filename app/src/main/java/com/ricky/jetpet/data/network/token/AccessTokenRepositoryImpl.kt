@@ -1,6 +1,6 @@
-package com.ricky.jetpet.data.token
+package com.ricky.jetpet.data.network.token
 
-import com.ricky.jetpet.data.DataStoreUtil
+import com.ricky.jetpet.data.local.DataStoreUtil
 import com.ricky.jetpet.data.network.models.AccessToken
 import com.ricky.jetpet.data.network.retrofit.PetFinderApiService
 import kotlinx.coroutines.Dispatchers

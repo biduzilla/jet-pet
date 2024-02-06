@@ -2,8 +2,7 @@ package com.ricky.jetpet.apresentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ricky.jetpet.data.DataStoreUtil
-import com.ricky.jetpet.domain.DummyPetDataSource
+import com.ricky.jetpet.data.local.DataStoreUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -2,10 +2,10 @@ package com.ricky.jetpet.di
 
 import android.content.Context
 import com.ricky.jetpet.common.Constants.BASE_URL
-import com.ricky.jetpet.data.DataStoreUtil
+import com.ricky.jetpet.data.local.DataStoreUtil
 import com.ricky.jetpet.data.network.retrofit.PetFinderApiService
-import com.ricky.jetpet.data.token.AccessTokenRepository
-import com.ricky.jetpet.data.token.AccessTokenRepositoryImpl
+import com.ricky.jetpet.data.network.token.AccessTokenRepository
+import com.ricky.jetpet.data.network.token.AccessTokenRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

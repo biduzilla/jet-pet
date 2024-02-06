@@ -1,6 +1,6 @@
-package com.ricky.jetpet.data.interceptors
+package com.ricky.jetpet.data.network.interceptors
 
-import com.ricky.jetpet.data.token.AccessTokenRepository
+import com.ricky.jetpet.data.network.token.AccessTokenRepository
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

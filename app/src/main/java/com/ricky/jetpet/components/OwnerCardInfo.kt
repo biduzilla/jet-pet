@@ -30,7 +30,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ricky.jetpet.R
-import com.ricky.jetpet.domain.DummyPetDataSource
 import com.ricky.jetpet.domain.model.Owner
 
 @Composable
