@@ -1,15 +1,13 @@
 package com.ricky.jetpet.data.network.models
 
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class Environment(
-    @SerialName("cats")
+    @SerializedName("cats")
     val cats: Boolean,
-    @SerialName("children")
+    @SerializedName("children")
     val children: Boolean,
-    @SerialName("dogs")
+    @SerializedName("dogs")
     val dogs: Boolean
 )

@@ -48,7 +48,6 @@ fun PetInfoItem(
     var isLoading: Boolean by remember {
         mutableStateOf(false)
     }
-    val context = LocalContext.current
 
     Card(
         modifier = modifier
@@ -71,8 +70,7 @@ fun PetInfoItem(
                 CircularProgressIndicator()
             }
 
-
-            Row {
+            Row(modifier = Modifier.weight(1f)) {
                 AsyncImage(
                     modifier = Modifier
                         .size(80.dp)
@@ -82,6 +80,7 @@ fun PetInfoItem(
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     alignment = Alignment.CenterStart,
+                    error = painterResource(id = R.drawable.placeholder_ic),
                     onLoading = {
                         isLoading = true
                     },
@@ -89,11 +88,7 @@ fun PetInfoItem(
                         isLoading = false
                     },
                     onError = {
-                        Toast.makeText(
-                            context,
-                            it.result.throwable.message,
-                            Toast.LENGTH_LONG
-                        ).show()
+
                     }
                 )
                 Spacer(modifier = Modifier.width(16.dp))

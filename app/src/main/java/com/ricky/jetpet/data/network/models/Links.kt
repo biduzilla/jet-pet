@@ -1,15 +1,13 @@
 package com.ricky.jetpet.data.network.models
 
+import com.google.gson.annotations.SerializedName
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class Links(
-    @SerialName("organization")
+    @SerializedName("organization")
     val organization: Organization,
-    @SerialName("self")
+    @SerializedName("self")
     val self: Self,
-    @SerialName("type")
+    @SerializedName("type")
     val type: Type
 )

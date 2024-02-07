@@ -1,37 +1,28 @@
 package com.ricky.jetpet.data.repository
 
-import com.ricky.jetpet.data.network.mappers.AnimalApiMapper
-import com.ricky.jetpet.data.network.mappers.PetApiMapper
-import com.ricky.jetpet.data.network.models.Animal
-import com.ricky.jetpet.data.network.models.ApiAnimals
+import android.util.Log
+import com.ricky.jetpet.data.network.models.toPet
 import com.ricky.jetpet.data.network.retrofit.PetFinderApiService
 import com.ricky.jetpet.domain.model.Pet
 import com.ricky.jetpet.domain.repository.PetRepository
-import com.ricky.jetpet.utils.ResourceHolder
 import javax.inject.Inject
 
 class PetRepositoryImpl @Inject constructor(
     private val apiService: PetFinderApiService,
-    private val petMapper: PetApiMapper<List<Pet>, ApiAnimals>,
-    private val animalMapper: AnimalApiMapper<Pet, Animal>
 ) : PetRepository {
-    override suspend fun getAnimals(page: Int): ResourceHolder<List<Pet>> {
-        return try {
-            val data = apiService.getAnimals(page)
+    override suspend fun getAnimals(page: Int, token: String): List<Pet> {
 
-            ResourceHolder.Success(petMapper.mapToDomain(data))
-        } catch (e: Exception) {
-            ResourceHolder.Error(e.cause)
+        val data = apiService.getAnimals(page = page, token = token)
+        val pets = data.animals.map { it.toPet() }
+
+        pets.forEach { animal ->
+            animal.currentPage = data.pagination.currentPage
         }
+        Log.i("infoteste", "getAnimals: $pets")
+        return pets
     }
 
-    override suspend fun getAnimalById(id: Int): ResourceHolder<Pet> {
-        return try {
-            val data = apiService.getAnimal(id)
-
-            ResourceHolder.Success(animalMapper.mapToDomain(data))
-        } catch (e: Exception) {
-            ResourceHolder.Error(e.cause)
-        }
+    override suspend fun getAnimalById(id: Int, token: String): Pet {
+        return apiService.getAnimal(id = id, token = token).toPet()
     }
 }

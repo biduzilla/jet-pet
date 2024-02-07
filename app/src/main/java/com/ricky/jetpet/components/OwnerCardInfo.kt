@@ -91,9 +91,3 @@ fun OwnerCardInfo(
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-private fun OwnerCardInfoPreview() {
-    OwnerCardInfo(owner = DummyPetDataSource.dogList[0].owner)
-}

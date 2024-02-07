@@ -1,17 +1,15 @@
 package com.ricky.jetpet.data.network.models
 
+import com.google.gson.annotations.SerializedName
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class Breeds(
-    @SerialName("mixed")
+    @SerializedName("mixed")
     val mixed: Boolean,
-    @SerialName("primary")
+    @SerializedName("primary")
     val primary: String,
-    @SerialName("secondary")
+    @SerializedName("secondary")
     val secondary: String,
-    @SerialName("unknown")
+    @SerializedName("unknown")
     val unknown: Boolean
 )

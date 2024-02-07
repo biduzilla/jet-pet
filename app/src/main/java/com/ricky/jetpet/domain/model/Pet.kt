@@ -16,5 +16,5 @@ data class Pet(
     val status: String = "",
     val tags: List<String> = emptyList(),
     val type: String = "",
-    val currentPage: Int
+    var currentPage: Int
 )

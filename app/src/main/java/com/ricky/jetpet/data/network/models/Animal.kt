@@ -1,55 +1,79 @@
 package com.ricky.jetpet.data.network.models
 
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.ricky.jetpet.domain.model.Pet
+import com.ricky.jetpet.utils.Utils.formatContacts
+import com.ricky.jetpet.utils.Utils.formatData
+import com.ricky.jetpet.utils.Utils.formatPhotos
+import com.google.gson.annotations.SerializedName
 
-@Serializable
+
 data class Animal(
-    @SerialName("age")
+    @SerializedName("age")
     val age: String,
-    @SerialName("attributes")
+    @SerializedName("attributes")
     val attributes: Attributes,
-    @SerialName("breeds")
+    @SerializedName("breeds")
     val breeds: Breeds,
-    @SerialName("coat")
-    val coat: Any?,
-    @SerialName("colors")
+    @SerializedName("coat")
+    val coat: String?,
+    @SerializedName("colors")
     val colors: Colors,
-    @SerialName("contact")
+    @SerializedName("contact")
     val contact: Contact,
-    @SerialName("description")
+    @SerializedName("description")
     val description: String,
-    @SerialName("distance")
+    @SerializedName("distance")
     val distance: Double,
-    @SerialName("environment")
+    @SerializedName("environment")
     val environment: Environment,
-    @SerialName("gender")
+    @SerializedName("gender")
     val gender: String,
-    @SerialName("id")
+    @SerializedName("id")
     val id: Int,
-    @SerialName("_links")
+    @SerializedName("_links")
     val links: Links,
-    @SerialName("name")
+    @SerializedName("name")
     val name: String,
-    @SerialName("organization_id")
+    @SerializedName("organization_id")
     val organizationId: String,
-    @SerialName("photos")
+    @SerializedName("photos")
     val photos: List<Photo>,
-    @SerialName("published_at")
+    @SerializedName("published_at")
     val publishedAt: String,
-    @SerialName("size")
+    @SerializedName("size")
     val size: String,
-    @SerialName("species")
+    @SerializedName("species")
     val species: String,
-    @SerialName("status")
+    @SerializedName("status")
     val status: String,
-    @SerialName("tags")
+    @SerializedName("tags")
     val tags: List<String>,
-    @SerialName("type")
+    @SerializedName("type")
     val type: String,
-    @SerialName("url")
+    @SerializedName("url")
     val url: String,
-    @SerialName("videos")
+    @SerializedName("videos")
     val videos: List<Video>
 )
+
+fun Animal.toPet(): Pet {
+    return Pet(
+        id = formatData(id.toString()),
+        age = formatData(age),
+        breeds = formatData(breeds.primary),
+        colors = formatData(colors.primary),
+        contact = formatContacts(contact),
+        description = formatData(description),
+        distance = formatData(distance.toString()),
+        gender = formatData(gender),
+        name = formatData(name),
+        photos = formatPhotos(photos),
+        size = formatData(size),
+        species = formatData(species),
+        status = formatData(status),
+        tags = tags,
+        type = formatData(type),
+        currentPage = 0
+    )
+}

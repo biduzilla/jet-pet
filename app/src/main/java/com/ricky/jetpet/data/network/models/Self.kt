@@ -1,11 +1,9 @@
 package com.ricky.jetpet.data.network.models
 
+import com.google.gson.annotations.SerializedName
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class Self(
-    @SerialName("href")
+    @SerializedName("href")
     val href: String
 )

@@ -1,15 +1,13 @@
 package com.ricky.jetpet.data.network.models
 
+import com.google.gson.annotations.SerializedName
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class Contact(
-    @SerialName("address")
+    @SerializedName("address")
     val address: Address,
-    @SerialName("email")
+    @SerializedName("email")
     val email: String,
-    @SerialName("phone")
+    @SerializedName("phone")
     val phone: String
 )

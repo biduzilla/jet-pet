@@ -12,10 +12,10 @@ import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.ricky.jetpet.apresentation.detail.DetailScreen
-import com.ricky.jetpet.apresentation.detail.DetailsViewModel
-import com.ricky.jetpet.apresentation.home.HomeScreen
-import com.ricky.jetpet.apresentation.home.HomeViewModel
+import com.ricky.jetpet.presentation.detail.DetailScreen
+import com.ricky.jetpet.presentation.detail.DetailsViewModel
+import com.ricky.jetpet.presentation.home.HomeScreen
+import com.ricky.jetpet.presentation.home.HomeViewModel
 import com.ricky.jetpet.utils.Constants
 
 @OptIn(ExperimentalAnimationApi::class)

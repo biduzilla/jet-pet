@@ -1,4 +1,4 @@
-package com.ricky.jetpet.apresentation.detail
+package com.ricky.jetpet.presentation.detail
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
@@ -34,7 +34,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -44,9 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.ricky.jetpet.R
-import com.ricky.jetpet.apresentation.detail.components.PetBasicInfo
+import com.ricky.jetpet.presentation.detail.components.PetBasicInfo
 import com.ricky.jetpet.domain.model.Pet
-import com.ricky.jetpet.utils.ResourceHolder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,79 +79,72 @@ fun DetailScreen(
         )
     }) { paddingValues ->
         LazyColumn(contentPadding = paddingValues) {
-            when (state.pet) {
-                is ResourceHolder.Error -> {
-                    state.pet.throwable?.printStackTrace()
-                    Toast.makeText(
-                        context,
-                        state.pet.throwable?.message,
-                        Toast.LENGTH_LONG
-                    ).show()
+            if (state.error.isNotBlank()) {
+                Toast.makeText(
+                    context,
+                    state.error,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            if (state.isLoading) {
+                item {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .wrapContentSize(align = Alignment.Center)
+                    )
                 }
+            }
 
-                is ResourceHolder.Loading -> {
-                    item {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .wrapContentSize(align = Alignment.Center)
-                        )
+            item {
+                AsyncImage(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(346.dp),
+                    model = if (state.pet?.photos?.isNotEmpty() == true) state.pet.photos[0].full else null,
+                    placeholder = painterResource(id = R.drawable.placeholder_ic),
+                    error = painterResource(id = R.drawable.placeholder_ic),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.CenterStart,
+                    onLoading = {
+                        isLoading = true
+                    },
+                    onSuccess = {
+                        isLoading = false
+                    },
+                    onError = {
+                        Toast.makeText(
+                            context,
+                            it.result.throwable.message,
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
-                }
-
-                is ResourceHolder.Success -> {
-                    item {
-                        AsyncImage(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(346.dp)
-                                .clip(RoundedCornerShape(16.dp)),
-                            model = if (state.pet.data?.photos?.isNotEmpty() == true) state.pet.data.photos[0].full else null,
-                            placeholder = painterResource(id = R.drawable.placeholder_ic),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            alignment = Alignment.CenterStart,
-                            onLoading = {
-                                isLoading = true
-                            },
-                            onSuccess = {
-                                isLoading = false
-                            },
-                            onError = {
-                                Toast.makeText(
-                                    context,
-                                    it.result.throwable.message,
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        PetBasicInfo(
-                            name = if (state.pet.data != null) state.pet.data.name else "unknown",
-                            gender = if (state.pet.data != null) state.pet.data.gender else "unknown",
-                            location = if (state.pet.data != null) state.pet.data.contact.address else "unknown",
-                            species = if (state.pet.data != null) state.pet.data.species else "unknown",
-                            status = if (state.pet.data != null) state.pet.data.status else "unknown",
-                        )
-                    }
-                    item {
-                        MyStoryItem(pet = state.pet.data)
-                    }
-                    item {
-                        PetInfo(pet = state.pet.data)
-                    }
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                PetBasicInfo(
+                    name = if (state.pet != null) state.pet.name else "unknown",
+                    gender = if (state.pet != null) state.pet.gender else "unknown",
+                    location = if (state.pet != null) state.pet.contact.address else "unknown",
+                    species = if (state.pet != null) state.pet.species else "unknown",
+                    status = if (state.pet != null) state.pet.status else "unknown",
+                )
+            }
+            item {
+                MyStoryItem(pet = state.pet)
+            }
+            item {
+                PetInfo(pet = state.pet)
+            }
 
 //            item {
 //                OwnerCardInfo(owner = state.pet.owner)
 //            }
-                    item {
-                        PetButton {
+            item {
+                PetButton {
 
-                        }
-                    }
                 }
             }
-
         }
     }
 }
@@ -270,7 +261,7 @@ fun InfoCard(
                 text = primaryText,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.height(4.dp))
         }

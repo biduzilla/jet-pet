@@ -1,21 +1,19 @@
 package com.ricky.jetpet.data.network.models
 
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class Address(
-    @SerialName("address1")
+    @SerializedName("address1")
     val address1: String,
-    @SerialName("address2")
+    @SerializedName("address2")
     val address2: String,
-    @SerialName("city")
+    @SerializedName("city")
     val city: String,
-    @SerialName("country")
+    @SerializedName("country")
     val country: String,
-    @SerialName("postcode")
+    @SerializedName("postcode")
     val postcode: String,
-    @SerialName("state")
+    @SerializedName("state")
     val state: String
 )

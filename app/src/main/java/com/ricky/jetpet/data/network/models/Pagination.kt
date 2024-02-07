@@ -1,19 +1,20 @@
 package com.ricky.jetpet.data.network.models
 
 
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
+
 data class Pagination(
-    @SerialName("count_per_page")
+    @SerializedName("count_per_page")
     val countPerPage: Int,
-    @SerialName("current_page")
+    @SerializedName("current_page")
     val currentPage: Int,
-    @SerialName("_links")
+    @SerializedName("_links")
     val links: Links,
-    @SerialName("total_count")
+    @SerializedName("total_count")
     val totalCount: Int,
-    @SerialName("total_pages")
+    @SerializedName("total_pages")
     val totalPages: Int
 )

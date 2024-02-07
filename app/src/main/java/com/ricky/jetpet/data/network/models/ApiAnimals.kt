@@ -1,13 +1,11 @@
 package com.ricky.jetpet.data.network.models
 
+import com.google.gson.annotations.SerializedName
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class ApiAnimals(
-    @SerialName("animals")
+    @SerializedName("animals")
     val animals: List<Animal>,
-    @SerialName("pagination")
+    @SerializedName("pagination")
     val pagination: Pagination
 )

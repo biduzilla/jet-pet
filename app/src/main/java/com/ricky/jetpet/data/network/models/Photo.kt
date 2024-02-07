@@ -1,17 +1,16 @@
 package com.ricky.jetpet.data.network.models
 
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
+
 data class Photo(
-    @SerialName("full")
+    @SerializedName("full")
     val full: String,
-    @SerialName("large")
+    @SerializedName("large")
     val large: String,
-    @SerialName("medium")
+    @SerializedName("medium")
     val medium: String,
-    @SerialName("small")
+    @SerializedName("small")
     val small: String
 )
