@@ -36,7 +36,7 @@ fun HomeScreen(
     val scrollState = rememberLazyListState()
     val context = LocalContext.current
 
-    if (state.error.isBlank()) {
+    if (state.error.isNotBlank()) {
         Toast.makeText(context, state.error, Toast.LENGTH_SHORT).show()
     }
 

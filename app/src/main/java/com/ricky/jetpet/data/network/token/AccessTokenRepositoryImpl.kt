@@ -14,23 +14,24 @@ class AccessTokenRepositoryImpl @Inject constructor(
     private val dataStore: DataStoreUtil,
     private val api: AuthApi
 ) : AccessTokenRepository {
-    companion object{
+    companion object {
         private const val TAG = "AccessTokenRepositoryImpl"
     }
+
     override suspend fun fetchAccessToken(): AccessToken {
-        return withContext(Dispatchers.IO) {
-            val accessToken = api.getAuthToken()
-            Log.i("infoteste", "fetchAccessToken: $accessToken")
-            saveToken("Bearer ${accessToken.accessToken}")
-            accessToken
-        }
+        val accessToken = api.getAuthToken()
+        Log.i("infoteste", "fetchAccessToken: $accessToken")
+        dataStore.saveToken("${accessToken.tokenType} ${accessToken.accessToken}")
+        return accessToken
     }
 
     override fun refreshToken(): AccessToken? {
         return null
     }
 
-    override suspend fun saveToken(token: String?) = dataStore.saveToken(token)
+    override suspend fun saveToken(token: String?) {
+
+    }
 
     override fun token(): Flow<String?> = dataStore.getToken()
 

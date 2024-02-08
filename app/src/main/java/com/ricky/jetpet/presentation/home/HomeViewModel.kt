@@ -25,6 +25,7 @@ class HomeViewModel @Inject constructor(
 
     private var _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
+    private var token: String = ""
 
     companion object {
         const val TAG = "infoteste"
@@ -32,23 +33,33 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            tokenRepository.fetchAccessToken()?.let { accessToken ->
-                getAnimals("Bearer ${accessToken.accessToken}")
+            dataStoreUtil.getTheme().collect { isDark ->
+                _state.update {
+                    it.copy(
+                        isDark = isDark
+                    )
+                }
             }
-            getTheme()
+        }
+        viewModelScope.launch {
+            dataStoreUtil.getToken().collect { tokenRecuperado ->
+                token = tokenRecuperado
+                getAnimals()
+            }
         }
     }
 
-    private fun getAnimals(token: String) {
+    private fun getAnimals() {
         getAnimals(_state.value.page, token).onEach { result ->
             when (result) {
                 is Resource.Error -> {
                     _state.update {
                         it.copy(
-                            error = result.message.toString(),
-                            isLoading = true
+                            error = result.message!!,
+                            isLoading = false
                         )
                     }
+                    tokenRepository.fetchAccessToken()
                 }
 
                 is Resource.Loading -> {
@@ -66,7 +77,7 @@ class HomeViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             error = "",
-                            isLoading = true,
+                            isLoading = false,
                             pets = pets.toList()
                         )
                     }
@@ -75,14 +86,8 @@ class HomeViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private suspend fun getTheme() {
-        dataStoreUtil.getTheme().collect { isDark ->
-            _state.update {
-                it.copy(
-                    isDark = isDark
-                )
-            }
-        }
+    private fun getData() {
+
     }
 
     fun onEvent(event: HomeEvent) {
@@ -94,16 +99,13 @@ class HomeViewModel @Inject constructor(
             }
 
             HomeEvent.LoadPets -> {
-                viewModelScope.launch {
-                    tokenRepository.fetchAccessToken()?.let {
-                        Log.i("infoteste", "onEvent: $it")
-                        getAnimals("Bearer ${it.accessToken}")
-                    }
-                }
                 _state.update {
                     it.copy(
                         page = _state.value.page + 1
                     )
+                }
+                viewModelScope.launch {
+                    getAnimals()
                 }
             }
         }
