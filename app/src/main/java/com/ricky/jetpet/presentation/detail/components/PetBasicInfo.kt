@@ -75,7 +75,7 @@ fun PetBasicInfo(
                 modifier = Modifier
                     .padding(end = 12.dp),
                 color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodyMedium
             )
         }
         Column(

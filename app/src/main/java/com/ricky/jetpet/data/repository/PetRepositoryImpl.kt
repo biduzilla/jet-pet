@@ -16,7 +16,6 @@ class PetRepositoryImpl @Inject constructor(
     override suspend fun getAnimals(page: Int, token: String): List<Pet> {
         val data = apiService.getAnimals(page = page, token = token)
 
-        Log.i(HomeViewModel.TAG, "getAnimals ${data.code()}")
         if (data.isSuccessful) {
             data.body()?.let { petResponse ->
                 val pets = petResponse.animals.map { it.toPet() }
@@ -28,11 +27,21 @@ class PetRepositoryImpl @Inject constructor(
             }
         } else if (data.code() == 401) {
             tokenRepository.fetchAccessToken()
+            getAnimals(page, token)
         }
         return emptyList()
     }
 
-    override suspend fun getAnimalById(id: Int, token: String): Pet {
-        return apiService.getAnimal(id = id, token = token).toPet()
+    override suspend fun getAnimalById(id: Int, token: String): Pet? {
+        val data = apiService.getAnimal(id = id, token = token)
+
+        if (data.isSuccessful) {
+            data.body()?.let { petResponse ->
+                return petResponse.animal.toPet()
+            }
+        } else if (data.code() == 401) {
+            tokenRepository.fetchAccessToken()
+        }
+        return null
     }
 }

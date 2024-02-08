@@ -114,11 +114,7 @@ fun DetailScreen(
                         isLoading = false
                     },
                     onError = {
-                        Toast.makeText(
-                            context,
-                            it.result.throwable.message,
-                            Toast.LENGTH_LONG
-                        ).show()
+
                     }
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -210,7 +206,7 @@ fun PetInfo(pet: Pet?, modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             InfoCard(
-                primaryText = "${pet?.age ?: "unknown"} yrs",
+                primaryText = pet?.age ?: "unknown",
                 secondaryText = "Age",
                 modifier = Modifier
                     .weight(1f)

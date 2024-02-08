@@ -14,7 +14,7 @@ class GetAnimal @Inject constructor(private val repository: PetRepository) {
         try {
             emit(Resource.Loading<Pet>())
             val pet = repository.getAnimalById(petId, token)
-            emit(Resource.Success<Pet>(pet))
+            emit(Resource.Success<Pet>(pet ?: Pet(currentPage = 0)))
         } catch (e: HttpException) {
             emit(Resource.Error<Pet>(e.localizedMessage ?: "Error inesperado"))
         } catch (e: IOException) {
